@@ -14,7 +14,7 @@ const Popup = ({ popup, handleAnswerClick }) => {
     const isCorrect = option === correctAnswer;
 
     // Provide feedback (correct/incorrect)
-    setFeedback(isCorrect ? "Bonne réponse !" : "Mauvaise réponse !");
+    setFeedback(isCorrect ? "Bonne réponse !" : `La Bonne réponse est : ${correctAnswer}`);
     setFeedbackColor(isCorrect ? "#28a745" : "#dc3545"); // Feedback color
 
     // Wait for a bit before closing the popup
@@ -85,7 +85,6 @@ const Popup = ({ popup, handleAnswerClick }) => {
           }}
           onClick={closePopup} // Close the popup when clicked
         >
-          &times;
         </div>
 
         {/* Popup content */}

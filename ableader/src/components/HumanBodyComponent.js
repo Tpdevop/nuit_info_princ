@@ -4,26 +4,54 @@ import questions from "../assets/questions.json";
 import AudioBackground from "./AudioBackground";
 import HealthBar from "./HealthBar";
 import Popup from "./Popup";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HumanBodyComponent = () => {
   const svgRef = useRef(null);
-  const [health, setHealth] = useState(100); // Health level
-  const [answeredQuestions, setAnsweredQuestions] = useState([]); // Questions answered
-  const [stats, setStats] = useState({ correct: 0, incorrect: 0 }); // Statistics
+  const [health, setHealth] = useState(100);
+  const [answeredQuestions, setAnsweredQuestions] = useState([]);
+  const [stats, setStats] = useState({ correct: 0, incorrect: 0 });
   const [popup, setPopup] = useState({
     visible: false,
     bodyPart: "",
     question: "",
     options: [],
     context: "",
+    correctAnswer: "",
     x: 0,
     y: 0,
   });
-  const [isChallengeOver, setIsChallengeOver] = useState(false); // Track if the challenge is over
+  const [isChallengeOver, setIsChallengeOver] = useState(false);
 
-  // Handle element clicks
+  // Show toast notifications
+  const showToast = (isCorrect) => {
+    if (isCorrect) {
+      toast.success("✅ Correct answer! Well done!", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    } else {
+      toast.error("❌ Mauvaise réponse !", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+    }
+  };
+
+  // Handle element click to open popup
   const handleElementClick = (event) => {
-    if (isChallengeOver) return; // Prevent interactions if challenge is over
+    if (isChallengeOver) return;
 
     const targetId = event.target.id;
 
@@ -54,39 +82,47 @@ const HumanBodyComponent = () => {
     });
   };
 
-  // Handle answer clicks
+  // Handle the answer click in popup
   const handleAnswerClick = (option) => {
     const correctAnswer = popup.correctAnswer;
     const isCorrect = option === correctAnswer;
 
-    setAnsweredQuestions((prev) => [...prev, popup.bodyPart]); // Mark question as answered
+    // Show toast for feedback
+    showToast(isCorrect);
 
-    // Update statistics
+    setAnsweredQuestions((prev) => [...prev, popup.bodyPart]);
+
     setStats((prev) => ({
       correct: isCorrect ? prev.correct + 1 : prev.correct,
       incorrect: !isCorrect ? prev.incorrect + 1 : prev.incorrect,
     }));
 
-    // Update health for incorrect answers
     if (!isCorrect) {
-      setHealth((prevHealth) => Math.max(prevHealth - 10, 0));
+      setHealth((prevHealth) => Math.max(prevHealth - 10, 0)); // Reduce health on incorrect answer
     }
 
+    // Close popup after answering
     setPopup({ ...popup, visible: false });
 
-    // Check if challenge is over (either all questions answered or health is 0)
     if (answeredQuestions.length + 1 === Object.keys(questions).length || health <= 0) {
-      setIsChallengeOver(true);
+      setIsChallengeOver(true); // End challenge if health reaches 0 or all questions answered
+    }
+  };
+
+  // Handle clicks outside the popup to close it
+  const handleBackgroundClick = (e) => {
+    if (popup.visible && !svgRef.current.contains(e.target) && !e.target.closest('.popup')) {
+      setPopup({ ...popup, visible: false });
     }
   };
 
   // Restart the challenge
   const restartChallenge = () => {
-    setHealth(100); // Reset health
-    setAnsweredQuestions([]); // Reset answered questions
-    setStats({ correct: 0, incorrect: 0 }); // Reset statistics
-    setPopup({ ...popup, visible: false }); // Close popup
-    setIsChallengeOver(false); // Allow interactions again
+    setHealth(100);
+    setAnsweredQuestions([]);
+    setStats({ correct: 0, incorrect: 0 });
+    setPopup({ ...popup, visible: false });
+    setIsChallengeOver(false);
   };
 
   useEffect(() => {
@@ -104,7 +140,13 @@ const HumanBodyComponent = () => {
         });
       };
     }
-  }, []);
+
+    document.addEventListener("click", handleBackgroundClick);
+
+    return () => {
+      document.removeEventListener("click", handleBackgroundClick);
+    };
+  }, [popup]);
 
   return (
     <div
@@ -120,44 +162,49 @@ const HumanBodyComponent = () => {
         overflowX: "hidden",
       }}
     >
-      {/* Audio Background */}
-      <AudioBackground />
-
-      {/* Statistics Banner */}
-      {isChallengeOver && (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100%",
-            backgroundColor: "#4CAF50",
-            color: "#fff",
-            textAlign: "center",
-            padding: "15px 0",
-            zIndex: 1000,
-          }}
+      {/* Weather Button */}
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          zIndex: 1000,
+        }}
+      >
+        <a
+          href="https://stellular-moxie-560bbe.netlify.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ textDecoration: "none" }}
         >
-          <h2>Résumé de votre journée éducative</h2>
-          <p>Questions correctes : {stats.correct}</p>
-          <p>Questions incorrectes : {stats.incorrect}</p>
           <button
             style={{
-              padding: "10px 20px",
+              padding: "12px 24px",
               fontSize: "16px",
-              color: "#4CAF50",
-              backgroundColor: "#fff",
-              border: "none",
-              borderRadius: "8px",
+              fontWeight: "bold",
+              color: "#fff",
+              backgroundColor: "#007BFF",
+              border: "2px solid #0056b3",
+              borderRadius: "12px",
               cursor: "pointer",
-              marginTop: "10px",
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+              transition: "transform 0.3s ease, background-color 0.3s ease",
             }}
-            onClick={restartChallenge}
+            onMouseEnter={(e) => (e.target.style.backgroundColor = "#0056b3")}
+            onMouseLeave={(e) => (e.target.style.backgroundColor = "#007BFF")}
+            onMouseDown={(e) => (e.target.style.transform = "scale(0.95)")}
+            onMouseUp={(e) => (e.target.style.transform = "scale(1)")}
           >
-            Recommencer le défi
+            Vérifier le Météo
           </button>
-        </div>
-      )}
+        </a>
+      </div>
+
+      {/* Toastify Container */}
+      <ToastContainer /> 
+
+      {/* Audio Background */}
+      <AudioBackground />
 
       <h1
         style={{
@@ -170,6 +217,7 @@ const HumanBodyComponent = () => {
       >
         Corps Humain Interactif
       </h1>
+      <h3> Cliquez Sur Les Organes Du Corps!</h3>
 
       {/* Health Bar */}
       <HealthBar health={health} />
@@ -189,7 +237,7 @@ const HumanBodyComponent = () => {
             width: "85%",
             maxWidth: "450px",
             height: "auto",
-            pointerEvents: isChallengeOver ? "none" : "auto", // Disable SVG interaction if challenge is over
+            pointerEvents: isChallengeOver ? "none" : "auto",
           }}
         />
       </div>
