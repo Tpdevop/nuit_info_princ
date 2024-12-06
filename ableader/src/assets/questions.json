@@ -1,0 +1,68 @@
+{
+  "RightLung": {
+    "question": "Quelle est la fonction principale des poumons dans le corps ?",
+    "options": ["Pomper le sang", "Échanger l'oxygène", "Digérer les aliments", "Filtrer les toxines"],
+    "correctAnswer": "Échanger l'oxygène",
+    "context": "Les poumons agissent comme l'océan qui fournit l'oxygène à la planète grâce à la photosynthèse marine."
+  },
+  "LeftLung": {
+    "question": "Quelle est la fonction principale des poumons dans le corps ?",
+    "options": ["Pomper le sang", "Échanger l'oxygène", "Digérer les aliments", "Filtrer les toxines"],
+    "correctAnswer": "Échanger l'oxygène",
+    "context": "Les poumons agissent comme l'océan qui fournit l'oxygène à la planète grâce à la photosynthèse marine."
+  },
+  "Heart": {
+    "question": "Que fait le cœur ?",
+    "options": ["Stocke l'oxygène", "Produit de l'énergie", "Pompe le sang", "Régule la température"],
+    "correctAnswer": "Pompe le sang",
+    "context": "Le cœur est comme les courants marins, qui distribuent l'énergie et la vie à travers l'océan."
+  },
+  "Stomach": {
+    "question": "Que fait l'estomac ?",
+    "options": ["Digère les aliments", "Produit de l'oxygène", "Filtre le sang", "Stimule le métabolisme"],
+    "correctAnswer": "Digère les aliments",
+    "context": "L'estomac est similaire aux fonds marins où la décomposition des matières organiques enrichit l'écosystème."
+  },
+  "Brain": {
+    "question": "Quelle est la fonction principale du cerveau ?",
+    "options": ["Filtrer l'oxygène", "Pomper le sang", "Contrôler le corps", "Produire de l'énergie"],
+    "correctAnswer": "Contrôler le corps",
+    "context": "Le cerveau est comparable à l'océan qui régule les cycles climatiques et soutient la vie globale."
+  },
+  "LeftKidney": {
+    "question": "Quelle est la fonction principale des reins ?",
+    "options": ["Pomper le sang", "Produire de l'énergie", "Filtrer le sang", "Stocker les nutriments"],
+    "correctAnswer": "Filtrer le sang",
+    "context": "Les reins, comme les vagues de l'océan, éliminent les impuretés pour maintenir un équilibre sain."
+  },
+  "RightKidney": {
+    "question": "Quelle est la fonction principale des reins ?",
+    "options": ["Pomper le sang", "Produire de l'énergie", "Filtrer le sang", "Stocker les nutriments"],
+    "correctAnswer": "Filtrer le sang",
+    "context": "Les reins, comme les vagues de l'océan, éliminent les impuretés pour maintenir un équilibre sain."
+  },
+  "Liver": {
+    "question": "Quelle est la fonction principale du foie ?",
+    "options": ["Stocker l'oxygène", "Détoxifier le corps", "Digérer les aliments", "Filtrer le sang"],
+    "correctAnswer": "Détoxifier le corps",
+    "context": "Le foie, comme l'eau de mer, agit comme un filtre naturel pour éliminer les toxines."
+  },
+  "Intestine": {
+    "question": "Que font les intestins dans le processus digestif ?",
+    "options": ["Pompent le sang", "Absorbent les nutriments", "Filtrent le sang", "Produisent de l'énergie"],
+    "correctAnswer": "Absorbent les nutriments",
+    "context": "Les intestins sont comparables aux récifs coralliens, qui captent les nutriments essentiels pour l'écosystème marin."
+  },
+  "LeftEye": {
+    "question": "Quelle est la fonction principale de l'œil gauche ?",
+    "options": ["Voir des couleurs", "Gérer les réflexes", "Permettre la vision", "Analyser les sons"],
+    "correctAnswer": "Permettre la vision",
+    "context": "L'œil gauche, tout comme l'œil droit, joue un rôle crucial dans la perception visuelle en transmettant des informations à notre cerveau."
+  },
+  "RightEye": {
+    "question": "Pourquoi les deux yeux sont importants pour la vision ?",
+    "options": ["Ils permettent de voir en noir et blanc", "Ils améliorent la profondeur de champ", "Ils augmentent la taille de l'image", "Ils évitent la cécité"],
+    "correctAnswer": "Ils améliorent la profondeur de champ",
+    "context": "Les deux yeux travaillent ensemble pour créer une vision stéréoscopique, permettant de percevoir la profondeur et les distances."
+  }
+}
